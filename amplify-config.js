@@ -14,4 +14,4 @@ window.aws_amplify_config = {
   },
 };
 
-aws_amplify.Amplify.configure(window.aws_amplify_config);
+Amplify.Amplify.configure(window.aws_amplify_config);
