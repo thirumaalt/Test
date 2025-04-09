@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Forgot Password</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="auth-container">
+    <h2>Forgot Password</h2>
+    <div id="forgotSection">
+      <input type="text" id="forgotUsername" placeholder="Enter username or email" />
+      <button onclick="sendResetCode()">Send Verification Code</button>
+    </div>
+    <div id="resetSection" style="display:none;">
+      <input type="text" id="resetCode" placeholder="Enter verification code" />
+      <input type="password" id="newPassword" placeholder="Enter new password" />
+      <button onclick="resetPassword()">Reset Password</button>
+    </div>
+    <p>Return to <a href="login.html">Login</a></p>
+  </div>
+  
+  <script src="https://unpkg.com/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
+  <script src="amplify-config.js"></script>
+  <script>
+    async function sendResetCode() {
+      const username = document.getElementById("forgotUsername").value;
+      try {
+        await aws_amplify.Auth.forgotPassword(username);
+        alert("Verification code sent to your email.");
+        document.getElementById("forgotSection").style.display = "none";
+        document.getElementById("resetSection").style.display = "block";
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    }
+
+    async function resetPassword() {
+      const username = document.getElementById("forgotUsername").value;
+      const code = document.getElementById("resetCode").value;
+      const newPassword = document.getElementById("newPassword").value;
+      try {
+        await aws_amplify.Auth.forgotPasswordSubmit(username, code, newPassword);
+        alert("Password reset successful! Please log in.");
+        window.location.href = "login.html";
+      } catch (error) {
+        alert("Error resetting password: " + error.message);
+      }
+    }
+  </script>
+</body>
+</html>

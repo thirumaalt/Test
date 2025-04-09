@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" 
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHU_SCcJHgXloTyT2A==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://kit.fontawesome.com/c451d80140.js" crossorigin="anonymous"></script>
+  <title>Facebook</title>
+</head>
+<body>
+  <!-- Force user authentication on page load -->
+  <script src="https://unpkg.com/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
+  <script src="amplify-config.js"></script>
+  <script>
+    // Immediately check if the user is authenticated.
+    aws_amplify.Auth.currentAuthenticatedUser()
+      .then(user => {
+        console.log("User is authenticated:", user.username);
+      })
+      .catch(err => {
+        // Redirect to login if not authenticated.
+        window.location.href = "login.html";
+      });
+  </script>
+  
+  <!-- Navigation -->
+  <nav>
+    <div class="nav_left">
+      <img src="images/logo.png" alt="Logo" class="logo" />
+      <ul>
+        <li><img src="images/notification.png" alt="Notification" id="notifIcon" /></li>
+        <li><img src="images/inbox.png" alt="Inbox" id="inboxIcon" /></li>
+        <li><img src="images/video.png" alt="Video" id="videoIcon" /></li>
+      </ul>
+    </div>
+    <div class="nav_right">
+      <div class="search_box">
+        <img src="images/search.png" alt="Search" />
+        <input type="search" placeholder="Search" id="searchInput" />
+      </div>
+      <div class="nav_user_icon online_icon" id="userProfile" onclick="settingsMenuToggle()">
+        <img src="images/profile-pic.png" alt="Profile" />
+      </div>
+    </div>
+    <!-- Settings Menu -->
+    <div class="setting_menu">
+      <div id="dark_btn" class="dark_btn_on"><span></span></div>
+      <div class="settings_menu_inner">
+        <div class="user_profile">
+          <img src="images/profile-pic.png" alt="Profile" />
+          <div>
+            <p id="navUsername">Your Name</p>
+            <a href="profile.html">View Profile</a>
+          </div>
+        </div>
+        <hr />
+        <div class="setting_link">
+          <img src="images/logout.png" class="setting_icon" alt="Logout" />
+          <a href="#" onclick="logout()">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Main Feed Content -->
+  <div class="feed-container">
+    <h2>Welcome to Your Feed</h2>
+    <div class="feed-grid" id="feedGrid">
+      <!-- Feed images injected here -->
+    </div>
+  </div>
+  
+  <!-- Scripts -->
+  <script>
+    // Update user information in navigation after authentication is confirmed.
+    aws_amplify.Auth.currentAuthenticatedUser()
+      .then(user => {
+        document.getElementById("userProfile").setAttribute("title", "Logged in as " + user.username);
+        document.getElementById("navUsername").innerText = user.username;
+      })
+      .catch(() => {
+        console.log("User not authenticated.");
+      });
+
+    // Global logout function
+    async function logout() {
+      try {
+        await aws_amplify.Auth.signOut();
+        alert("Logged out successfully.");
+        window.location.href = "login.html";
+      } catch (error) {
+        alert("Error during logout: " + error.message);
+      }
+    }
+
+    // Settings menu toggle
+    function settingsMenuToggle() {
+      document.querySelector(".setting_menu").classList.toggle("active");
+    }
+
+    // Dummy functionality for nav icons
+    document.getElementById("notifIcon").addEventListener("click", () => {
+      alert("No new notifications.");
+    });
+    document.getElementById("inboxIcon").addEventListener("click", () => {
+      alert("Your inbox is empty.");
+    });
+    document.getElementById("videoIcon").addEventListener("click", () => {
+      alert("No new videos.");
+    });
+    document.getElementById("searchInput").addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        alert("Searching for: " + event.target.value);
+      }
+    });
+
+    // Feed: an example list of random images (stored locally)
+    const feedImages = [
+      "images/random/random1.jpg",
+      "images/random/random2.jpg",
+      "images/random/random3.jpg",
+      "images/random/random4.jpg",
+      "images/random/random5.jpg",
+    ];
+
+    // Display random images in the feed grid
+    function loadFeed() {
+      const feedGrid = document.getElementById("feedGrid");
+      feedImages.forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "Feed Image";
+        img.className = "feed-image";
+        feedGrid.appendChild(img);
+      });
+    }
+
+    loadFeed();
+  </script>
+</body>
+</html>

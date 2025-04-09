@@ -1,0 +1,211 @@
+/* style.css */
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #f7f7f7;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Auth Container (signup, login, forgot, profile) */
+  .auth-container, .profile-container {
+    max-width: 500px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  .auth-container h2, .profile-container h2 {
+    margin-bottom: 20px;
+    color: #444;
+  }
+  .auth-container input, 
+  .auth-container button,
+  .profile-container input,
+  .profile-container button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  .auth-container button,
+  .profile-container button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .auth-container button:hover,
+  .profile-container button:hover {
+    background: #0056b3;
+  }
+  
+  /* Navigation */
+  nav {
+    background: #fff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav .nav_left {
+    display: flex;
+    align-items: center;
+  }
+  nav .nav_left .logo {
+    width: 40px;
+    margin-right: 20px;
+  }
+  nav .nav_left ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+  }
+  nav .nav_left ul li img {
+    width: 24px;
+  }
+  nav .nav_right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  nav .search_box {
+    position: relative;
+  }
+  nav .search_box input {
+    padding: 6px 8px 6px 30px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+  }
+  nav .search_box img {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+  }
+  .nav_user_icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .nav_user_icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Settings Menu */
+  .setting_menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 30px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    width: 250px;
+    padding: 15px;
+  }
+  .setting_menu.active {
+    display: block;
+  }
+  .setting_menu .settings_menu_inner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .setting_menu .user_profile {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .setting_menu .user_profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  .setting_menu .setting_link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+  }
+  .setting_menu .setting_link img {
+    width: 20px;
+  }
+  .setting_menu hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+  }
+  
+  /* Feed Page */
+  .feed-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+  }
+  .feed-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #444;
+  }
+  .feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  .feed-grid .feed-image {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    height: 200px;
+    transition: transform 0.3s ease;
+  }
+  .feed-grid .feed-image:hover {
+    transform: scale(1.05);
+  }
+  
+  /* General Container for pages with sidebars (if used) */
+  .container {
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+  }
+  .left_sidebar, .right_sidebar {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  }
+  
