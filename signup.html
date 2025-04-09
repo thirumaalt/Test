@@ -14,18 +14,25 @@
       <input type="password" id="password" placeholder="Password" />
       <button onclick="signUp()">Sign Up</button>
     </div>
-    <!-- Email Verification Section -->
     <div id="confirmSection" style="display:none;">
       <input type="text" id="verificationCode" placeholder="Verification Code" />
       <button onclick="confirmSignUp()">Confirm Sign Up</button>
     </div>
     <p>Already have an account? <a href="login.html">Login here</a></p>
   </div>
-  
-  <!-- Amplify -->
+
+  <!-- Scripts -->
   <script src="https://unpkg.com/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
-  <script src="amplify-config.js"></script>
   <script>
+    Amplify.configure({
+      Auth: {
+        region: 'ap-south-1',
+        userPoolId: 'ap-south-1_AWVfn9P3b',
+        userPoolWebClientId: '7do93ckljrsk5s9tbgtc0dv553',
+        mandatorySignIn: true
+      }
+    });
+
     async function signUp() {
       const username = document.getElementById('username').value;
       const email = document.getElementById('email').value;
