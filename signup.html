@@ -22,17 +22,22 @@
   </div>
 
   <!-- Load AWS Amplify -->
-  <script src="https://unpkg.com/aws-amplify@4.3.21/dist/aws-amplify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aws-amplify@6.14.1/dist/aws-amplify.min.js"></script>
   <script>
+    // Ensure Amplify is available globally
+    const { Amplify } = window;
+
+    // Configure Amplify
     Amplify.configure({
       Auth: {
         region: 'ap-south-1',
         userPoolId: 'ap-south-1_AWVfn9P3b',
         userPoolWebClientId: '7do93ckljrsk5s9tbgtc0dv553',
-        mandatorySignIn: true
-      }
+        mandatorySignIn: true,
+      },
     });
 
+    // Sign-up function
     async function signUp() {
       const username = document.getElementById('username').value;
       const email = document.getElementById('email').value;
@@ -41,25 +46,26 @@
         await Amplify.Auth.signUp({
           username,
           password,
-          attributes: { email }
+          attributes: { email },
         });
-        alert("Sign up successful! Check your email for the confirmation code.");
-        document.getElementById("signupSection").style.display = "none";
-        document.getElementById("confirmSection").style.display = "block";
+        alert('Sign up successful! Check your email for the confirmation code.');
+        document.getElementById('signupSection').style.display = 'none';
+        document.getElementById('confirmSection').style.display = 'block';
       } catch (error) {
-        alert("Error during sign up: " + error.message);
+        alert('Error during sign up: ' + error.message);
       }
     }
 
+    // Confirm sign-up function
     async function confirmSignUp() {
       const username = document.getElementById('username').value;
       const code = document.getElementById('verificationCode').value;
       try {
         await Amplify.Auth.confirmSignUp(username, code);
-        alert("Email verified successfully! You can now log in.");
-        window.location.href = "login.html";
+        alert('Email verified successfully! You can now log in.');
+        window.location.href = 'login.html';
       } catch (error) {
-        alert("Error confirming sign up: " + error.message);
+        alert('Error confirming sign up: ' + error.message);
       }
     }
   </script>
