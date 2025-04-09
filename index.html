@@ -15,6 +15,22 @@
   <title>Facebook</title>
 </head>
 <body>
+    <script>
+        // Redirect unauthenticated users
+        aws_amplify.Auth.currentAuthenticatedUser()
+          .then(user => {
+            console.log("✅ Logged in as:", user.username);
+            document.body.style.display = "block"; // Safe to show the page
+          })
+          .catch(() => {
+            console.log("❌ Not logged in. Redirecting...");
+            window.location.href = "login.html"; // Or "auth.html" or wherever your login is
+          });
+      
+        // Hide page until we confirm auth
+        document.body.style.display = "none";
+      </script>
+      
   <!-- Include Amplify first -->
   <script src="https://unpkg.com/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
   <script src="amplify-config.js"></script>
@@ -126,11 +142,7 @@
 
     // Feed: an example list of random images (stored locally)
     const feedImages = [
-      "images/random/random1.jpg",
-      "images/random/random2.jpg",
-      "images/random/random3.jpg",
-      "images/random/random4.jpg",
-      "images/random/random5.jpg",
+        "images/random/*.jpg"
     ];
 
     // Display random images in the feed grid
