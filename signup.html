@@ -21,15 +21,13 @@
     <p>Already have an account? <a href="login.html">Login here</a></p>
   </div>
 
-  <!-- ✅ Correct Amplify UMD build -->
-  <script src="https://cdn.jsdelivr.net/npm/aws-amplify@4.3.21/dist/aws-amplify.min.js"></script>
+  <!-- ✅ Load from Cloudflare CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-amplify/4.3.21/aws-amplify.min.js"></script>
 
-  <!-- ✅ App logic -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const Amplify = window.Amplify;
 
-      // ✅ Ensure it's defined before configuring
       if (!Amplify || !Amplify.Auth) {
         alert("Amplify failed to load properly.");
         console.error("Amplify is:", Amplify);
