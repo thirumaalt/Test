@@ -1,4 +1,5 @@
 // amplify-config.js
+window.Amplify = aws_amplify;
 window.aws_amplify_config = {
   Auth: {
     region: 'ap-south-1',                // Your region (for example: ap-south-1)
