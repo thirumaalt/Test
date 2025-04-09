@@ -21,6 +21,7 @@
   <script src="https://unpkg.com/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
   <script src="amplify-config.js"></script>
   <script>
+    const aws_amplify = window.aws_amplify || window.Amplify;
     // Optional: Display current profile photo if stored in S3 (requires additional logic to retrieve image URL)
     async function uploadPhoto() {
       const fileInput = document.getElementById("photoFile");
