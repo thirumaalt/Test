@@ -15,21 +15,34 @@
   <title>Facebook</title>
 </head>
 <body>
-    <script>
-        // Redirect unauthenticated users
-        aws_amplify.Auth.currentAuthenticatedUser()
-          .then(user => {
-            console.log("✅ Logged in as:", user.username);
-            document.body.style.display = "block"; // Safe to show the page
-          })
-          .catch(() => {
-            console.log("❌ Not logged in. Redirecting...");
-            window.location.href = "login.html"; // Or "auth.html" or wherever your login is
-          });
-      
-        // Hide page until we confirm auth
-        document.body.style.display = "none";
-      </script>
+
+
+<!-- Load Amplify First -->
+<script src="https://unpkg.com/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
+<script src="amplify-config.js"></script>
+
+<script>
+  // Hide body content until we validate login
+  document.body.style.display = "none";
+
+  // Run auth check only after config is applied
+  window.addEventListener("DOMContentLoaded", async () => {
+    try {
+      const user = await Amplify.Auth.currentAuthenticatedUser();
+      console.log("✅ Authenticated:", user.username);
+      document.body.style.display = "block"; // Show content if logged in
+    } catch (err) {
+      console.log("❌ Not authenticated:", err);
+      // Redirect to login page (custom or hosted)
+      // Option 1: Redirect to custom login page
+      window.location.href = "login.html";
+
+      // Option 2 (Preferred): Use Amplify Hosted UI
+      // Amplify.Auth.federatedSignIn(); // Uncomment if you're using Hosted UI
+    }
+  });
+</script>
+
       
   <!-- Include Amplify first -->
   <script src="https://unpkg.com/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
