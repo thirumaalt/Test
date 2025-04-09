@@ -15,21 +15,24 @@
   <title>Facebook</title>
 </head>
 <body>
-  <!-- Force user authentication on page load -->
+  <!-- Include Amplify first -->
   <script src="https://unpkg.com/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
   <script src="amplify-config.js"></script>
+  
+  <!-- Force authentication check -->
   <script>
-    // Immediately check if the user is authenticated.
-    aws_amplify.Auth.currentAuthenticatedUser()
+    // Using global Amplify object instead of aws_amplify
+    Amplify.Auth.currentAuthenticatedUser()
       .then(user => {
         console.log("User is authenticated:", user.username);
+        // Optionally update UI elements here.
       })
       .catch(err => {
-        // Redirect to login if not authenticated.
+        console.log("Not authenticated, redirecting...", err);
         window.location.href = "login.html";
       });
   </script>
-  
+
   <!-- Navigation -->
   <nav>
     <div class="nav_left">
@@ -69,18 +72,18 @@
     </div>
   </nav>
   
-  <!-- Main Feed Content -->
+  <!-- Feed Container -->
   <div class="feed-container">
     <h2>Welcome to Your Feed</h2>
     <div class="feed-grid" id="feedGrid">
-      <!-- Feed images injected here -->
+      <!-- Feed images will be injected here -->
     </div>
   </div>
   
-  <!-- Scripts -->
+  <!-- Scripts for icons, feed, etc. -->
   <script>
-    // Update user information in navigation after authentication is confirmed.
-    aws_amplify.Auth.currentAuthenticatedUser()
+    // Update navigation with authenticated user info after authentication check.
+    Amplify.Auth.currentAuthenticatedUser()
       .then(user => {
         document.getElementById("userProfile").setAttribute("title", "Logged in as " + user.username);
         document.getElementById("navUsername").innerText = user.username;
@@ -92,7 +95,7 @@
     // Global logout function
     async function logout() {
       try {
-        await aws_amplify.Auth.signOut();
+        await Amplify.Auth.signOut();
         alert("Logged out successfully.");
         window.location.href = "login.html";
       } catch (error) {
